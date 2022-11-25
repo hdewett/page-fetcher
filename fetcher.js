@@ -4,33 +4,17 @@ const request = require('request');
 const fs = require('fs');
 
 request('http://www.google.com', (error, response, body) => {
-  console.log('error:', error); // Print the error if one occurred
-  console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received
-  console.log('body:', body); // Print the HTML for the Google homepage.
+  console.log('error:', error);
+  console.log('statusCode:', response && response.statusCode);
 
-  fs.writeFile("/home/labber/lighthouse/week-2/page-fetcher/index.html", body, err => {
+  let byteSize = body.length;
+  let fileName = "index.html";
+
+  fs.writeFile("./"+fileName, body, err => {
     if (err){
       console.log(err);
     }
-    console.log("Downloaded and saved to: ");
+    console.log(`Downloaded and saved ${byteSize} bytes to ./${fileName}.`);
   })
 
 });
-
-
-// asyncBreeds.js
-
-// const breedDetailsFromFile = function(breed) {
-//   console.log('breedDetailsFromFile: Calling readFile...');
-//   fs.readFile(`./data/${breed}.txt`, 'utf8', (error, data) => {
-//     console.log("In readFile's Callback: it has the data.");
-//     // ISSUE: Returning from *inner* callback function, not breedDetailsFromFile.
-//     if (!error) return data;
-//   });
-//   // ISSUE: Attempting to return data out here will also not work.
-//   //        Currently not returning anything from here, so breedDetailsFromFile function returns undefined.
-// };
-
-// // we try to get the return value
-// const bombay = breedDetailsFromFile('Bombay');
-// console.log('Return Value: ', bombay); // => will NOT print out details, instead we will see undefined!
